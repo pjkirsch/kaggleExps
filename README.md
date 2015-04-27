@@ -1,2 +1,2 @@
 # kaggleExps
-Contains personal codes generated for Kaggle's competitions
+Contains my personal codes generated for Kaggle's competitions
