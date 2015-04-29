@@ -9,9 +9,19 @@ local trainFile = assert(io.open("data/train.csv", "r"))
 print("Training data file opened.")
 
 -- Initialize variables containing data
-trainData = torch.Tensor(42000, 28, 28)
-trainLabel = {}
+nbTrain = 38000
+nbValid = 4000
 
+trainData = {
+	data = torch.Tensor(nbTrain, 28, 28),
+	labels = {},
+	size = function() return nbTrain end
+}
+validData = {
+	data = torch.Tensor(nbValid, 28, 28),
+	labels = {},
+	size = function() return nbValid end
+}
 local imageId = 0
 
 print("Reading file...")
@@ -20,15 +30,27 @@ for line in trainFile:lines() do
 	local j = 0 
 	if imageId ~= 0 then	-- First line containing header is skipped
 		for k,pixel in pairs(split(line, ",")) do
-			--print(imageId, i, j)
-			if j == 0 then
-				-- The case i=1, j=0 corresponds to the label info
-				trainLabel[imageId] = tonumber(pixel)
-			else
-				-- Save the pixel value 
-				trainData[{imageId, i, j}] = tonumber(pixel)
+			if imageId <= nbTrain then -- Image used as training data
+				--print(imageId, i, j)
+				if j == 0 then
+					-- The case i=1, j=0 corresponds to the label info
+					trainData.labels[imageId] = tonumber(pixel)
+				else
+					-- Save the pixel value 
+					trainData.data[{imageId, i, j}] = tonumber(pixel)
+				end
+			else	-- Image used as validation data
+				--print(imageId, i, j)
+				if j == 0 then
+					-- The case i=1, j=0 corresponds to the label info
+					validData.labels[imageId-nbTrain] = tonumber(pixel)
+				else
+					-- Save the pixel value 
+					validData.data[{imageId-nbTrain, i, j}] = tonumber(pixel)
+				end
+
 			end
-			-- Update indexes
+				-- Update indexes
 			if j == 28 then
 				i = i+1
 				j = 1 

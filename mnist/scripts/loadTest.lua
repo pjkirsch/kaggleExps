@@ -9,8 +9,12 @@ local testFile = assert(io.open("data/test.csv", "r"))
 print("Testing data file opened.")
 
 -- Initialize variables containing data
-testData = torch.Tensor(28000, 28, 28)
+nbTest = 28000
 
+testData = {
+	data = torch.Tensor(nbTest, 28, 28),
+	size = function() return nbTest end
+}
 local imageId = 0
 
 print("Reading file...")
@@ -22,7 +26,7 @@ for line in testFile:lines() do
 			--print(imageId, i, j)
 			
 			-- Save the pixel value 
-			testData[{imageId, i, j}] = tonumber(pixel)
+			testData.data[{imageId, i, j}] = tonumber(pixel)
 			
 			-- Update indexes
 			if j == 28 then

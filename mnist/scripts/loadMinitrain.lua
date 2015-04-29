@@ -9,8 +9,13 @@ local trainFile = assert(io.open("data/mini-train.csv", "r"))
 print("Training data file opened.")
 
 -- Initialize variables containing data
-trainData = torch.Tensor(42000, 28, 28)
-trainLabel = {}
+nbTrain = 200
+
+trainData = {
+	data = torch.Tensor(nbTrain, 28, 28),
+	labels = {},
+	size = function() return nbTrain end
+}
 
 local imageId = 0
 
@@ -23,10 +28,10 @@ for line in trainFile:lines() do
 			--print(imageId, i, j)
 			if j == 0 then
 				-- The case i=1, j=0 corresponds to the label info
-				trainLabel[imageId] = tonumber(pixel)
+				trainData.labels[imageId] = tonumber(pixel)
 			else
 				-- Save the pixel value 
-				trainData[{imageId, i, j}] = tonumber(pixel)
+				trainData.data[{imageId, i, j}] = tonumber(pixel)
 			end
 			-- Update indexes
 			if j == 28 then

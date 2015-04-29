@@ -11,3 +11,21 @@ function split(inputstr, sep)
 	end
 	return t
 end
+
+-- Convert number labels to class-id
+function num2classId(num)
+	if num == 0 then 
+		return 10
+	else
+		return num
+	end
+end
+
+-- Convert class-id to number labels
+function classId2num(id)
+	if id == 10 then
+		return 0
+	else
+		return id
+	end
+end
