@@ -9,7 +9,8 @@ height = 28
 width = 28
 
 nInputs = height*width
-nHL1 = 100
+nHL1 = 300
+nHL2 = 100
 nOutputs = 10
 
 -- Define model
@@ -17,7 +18,9 @@ model = nn.Sequential() -- The NN model is considered as a sequence of functions
 model:add(nn.Reshape(nInputs)) -- Reshape features from 28*28 to 784*1
 model:add(nn.Linear(nInputs, nHL1)) -- Connection weights
 model:add(nn.Tanh()) -- Hyperbolic tangent non-linear function
-model:add(nn.Linear(nHL1, nOutputs)) -- Connection weights
+model:add(nn.Linear(nHL1, nHL2)) -- Connection weights
+model:add(nn.Tanh()) -- Hyperbolic tangent non-linear function
+model:add(nn.Linear(nHL2, nOutputs)) -- Connection weights
 model:add(nn.LogSoftMax())
 
 -- Display model description
