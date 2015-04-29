@@ -3,6 +3,7 @@
 require 'scripts/funcs'
 
 require 'torch' -- torch
+require 'xlua' -- for progression bars
 
 -- Open training data file
 local trainFile = assert(io.open("data/train.csv", "r"))
@@ -28,6 +29,9 @@ print("Reading file...")
 for line in trainFile:lines() do
 	local i = 1
 	local j = 0 
+	
+	-- Display progression		
+	xlua.progress(imageId, 42000)
 	if imageId ~= 0 then	-- First line containing header is skipped
 		for k,pixel in pairs(split(line, ",")) do
 			if imageId <= nbTrain then -- Image used as training data

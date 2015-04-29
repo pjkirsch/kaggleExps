@@ -3,6 +3,7 @@
 require 'scripts/funcs'
 
 require 'torch' -- torch
+require 'xlua'	-- for progression bar
 
 -- Open testing data file
 local testFile = assert(io.open("data/test.csv", "r"))
@@ -21,6 +22,9 @@ print("Reading file...")
 for line in testFile:lines() do
 	local i = 1
 	local j = 1 
+	-- Display progression		
+	xlua.progress(imageId, 28000)
+
 	if imageId ~= 0 then	-- First line containing header is skipped
 		for k,pixel in pairs(split(line, ",")) do
 			--print(imageId, i, j)
