@@ -37,20 +37,19 @@ for line in trainFile:lines() do
 			if imageId <= nbTrain then -- Image used as training data
 				--print(imageId, i, j)
 				if j == 0 then
-					-- The case i=1, j=0 corresponds to the label info
+					--In case i=1, j=0, "pixel" corresponds to the label
 					trainData.labels[imageId] = tonumber(pixel)
 				else
 					-- Save the pixel value 
-					trainData.data[{imageId, i, j}] = tonumber(pixel)
+					trainData.data[{imageId, i, j}] =  rescalePixFeat(tonumber(pixel))
 				end
 			else	-- Image used as validation data
 				--print(imageId, i, j)
 				if j == 0 then
 					-- The case i=1, j=0 corresponds to the label info
-					validData.labels[imageId-nbTrain] = tonumber(pixel)
-				else
+					validData.labels[imageId-nbTrain] = tonumber(pixel)							else
 					-- Save the pixel value 
-					validData.data[{imageId-nbTrain, i, j}] = tonumber(pixel)
+					validData.data[{imageId-nbTrain, i, j}] = rescalePixFeat(tonumber(pixel))
 				end
 
 			end

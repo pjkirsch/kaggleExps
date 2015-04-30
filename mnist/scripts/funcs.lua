@@ -29,3 +29,8 @@ function classId2num(id)
 		return id
 	end
 end
+
+-- Rescale pixel input features from [0,256] to [-2,2] which is more appropriate for tanh activation function
+function rescalePixFeat(pixel)
+	return (pixel/64 - 2)
+end

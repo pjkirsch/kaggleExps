@@ -30,7 +30,7 @@ for line in testFile:lines() do
 			--print(imageId, i, j)
 			
 			-- Save the pixel value 
-			testData.data[{imageId, i, j}] = tonumber(pixel)
+			testData.data[{imageId, i, j}] = rescalePixFeat(tonumber(pixel))
 			
 			-- Update indexes
 			if j == 28 then
