@@ -13,7 +13,7 @@ print("Testing data file opened.")
 nbTest = 28000
 
 testData = {
-	data = torch.Tensor(nbTest, 28, 28),
+	data = torch.Tensor(nbTest, 1, 28, 28),
 	size = function() return nbTest end
 }
 local imageId = 0
@@ -23,14 +23,16 @@ for line in testFile:lines() do
 	local i = 1
 	local j = 1 
 	-- Display progression		
-	xlua.progress(imageId, 28000)
+	xlua.progress(imageId, nbTest)
+
+	if (imageId==nbTest+1) then break end
 
 	if imageId ~= 0 then	-- First line containing header is skipped
 		for k,pixel in pairs(split(line, ",")) do
 			--print(imageId, i, j)
 			
 			-- Save the pixel value 
-			testData.data[{imageId, i, j}] = rescalePixFeat(tonumber(pixel))
+			testData.data[{imageId, 1, i, j}] = rescalePixFeat(tonumber(pixel))
 			
 			-- Update indexes
 			if j == 28 then

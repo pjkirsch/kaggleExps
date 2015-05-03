@@ -14,12 +14,12 @@ nbTrain = 38000
 nbValid = 4000
 
 trainData = {
-	data = torch.Tensor(nbTrain, 28, 28),
+	data = torch.Tensor(nbTrain, 1, 28, 28),
 	labels = {},
 	size = function() return nbTrain end
 }
 validData = {
-	data = torch.Tensor(nbValid, 28, 28),
+	data = torch.Tensor(nbValid, 1, 28, 28),
 	labels = {},
 	size = function() return nbValid end
 }
@@ -29,9 +29,9 @@ print("Reading file...")
 for line in trainFile:lines() do
 	local i = 1
 	local j = 0 
-	
+	if (imageId==nbTrain+nbValid+1) then break end
 	-- Display progression		
-	xlua.progress(imageId, 42000)
+	xlua.progress(imageId, nbTrain + nbValid)
 	if imageId ~= 0 then	-- First line containing header is skipped
 		for k,pixel in pairs(split(line, ",")) do
 			if imageId <= nbTrain then -- Image used as training data
@@ -41,7 +41,7 @@ for line in trainFile:lines() do
 					trainData.labels[imageId] = tonumber(pixel)
 				else
 					-- Save the pixel value 
-					trainData.data[{imageId, i, j}] =  rescalePixFeat(tonumber(pixel))
+					trainData.data[{imageId, 1, i, j}] =  rescalePixFeat(tonumber(pixel))
 				end
 			else	-- Image used as validation data
 				--print(imageId, i, j)
@@ -49,7 +49,7 @@ for line in trainFile:lines() do
 					-- The case i=1, j=0 corresponds to the label info
 					validData.labels[imageId-nbTrain] = tonumber(pixel)							else
 					-- Save the pixel value 
-					validData.data[{imageId-nbTrain, i, j}] = rescalePixFeat(tonumber(pixel))
+					validData.data[{imageId-nbTrain, 1, i, j}] = rescalePixFeat(tonumber(pixel))
 				end
 
 			end

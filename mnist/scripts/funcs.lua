@@ -34,3 +34,4 @@ end
 function rescalePixFeat(pixel)
 	return (pixel/64 - 2)
 end
+
