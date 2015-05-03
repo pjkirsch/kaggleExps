@@ -1,4 +1,4 @@
--- Define a neural network model with 1 hidden layer and 1 softmax layer
+-- Define a neural network model with 3 Convolutional layers + 2 fully-connected layers + 1 softmax layer
 
 -- Load libraries
 require 'torch'
