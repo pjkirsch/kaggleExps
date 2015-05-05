@@ -3,7 +3,7 @@ require "scripts/funcs"
 dofile("scripts/loadTrain.lua")
 dofile("scripts/loadTest.lua")
 
-dofile("scripts/models/cnn.lua")
+dofile("scripts/models/cnn-ReLU.lua")
 
 dofile("scripts/train.lua")
 dofile("scripts/valid.lua")
